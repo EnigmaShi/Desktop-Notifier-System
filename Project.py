@@ -1,3 +1,4 @@
+#Make an excel sheet with columns S.no,Tasks,Date,Message and Time. Make sure to type Date and Time in IEEE format.
 import pandas as pd
 from datetime import datetime
 from plyer import notification
