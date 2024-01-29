@@ -1,0 +1,36 @@
+import pandas as pd
+from datetime import datetime
+from plyer import notification
+
+def read_dates_from_excel(file_path, dates_column='Date'):
+    df = pd.read_excel(file_path)
+
+    # Extract dates from the specified column
+    dates = df[dates_column]
+
+    return dates
+
+def show_task_reminders(file_path, dates_column='Date'):
+    today = datetime.now().date()
+
+    df = pd.read_excel(file_path)
+    due_today = df[df[dates_column].dt.date == today]
+
+    for index, row in due_today.iterrows():
+        task = row['Task']
+        message = row['Message']
+        notification_title = "Task Reminder"
+        notification_message = f"{task}: {message}"
+        notification.notify(
+            title=notification_title,
+            message=notification_message,
+            app_name='Task Reminder',
+            timeout=30
+        )
+
+if __name__ == "__main__":
+    file_path = "C:\\Users\\DELL\\OneDrive\\Desktop\\Desktop Notification\\Tasks.xlsx"  # Replace with your actual file path
+
+    # Show reminders for tasks due today
+    show_task_reminders(file_path)
+    #the project is ready
